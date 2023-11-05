@@ -16,8 +16,8 @@ public class PetDatabase {
         System.out.println("2) Add more pets");
         //System.out.println("3) Update an existing pet");
         //System.out.println("4) Remove an existing pet");
-        //System.out.println("5) Search pets by name");
-        //System.out.println("6) Search pets by age");
+        System.out.println("5) Search pets by name");
+        System.out.println("6) Search pets by age");
         System.out.println("7) Exit");
         System.out.print("Your choice: ");
         int choice = s.nextInt();
@@ -26,6 +26,8 @@ public class PetDatabase {
             switch(choice) {
                 case 1: displayPets(); break;
                 case 2: addPet(); break;
+                case 5: searchByName(); break;
+                case 6: searchByAge(); break;
                 case 7: break;
                 default: System.out.println("Invalid choice.");
             }
@@ -35,8 +37,8 @@ public class PetDatabase {
             System.out.println("2) Add more pets");
             //System.out.println("3) Update an existing pet");
             //System.out.println("4) Remove an existing pet");
-            //System.out.println("5) Search pets by name");
-            //System.out.println("6) Search pets by age");
+            System.out.println("5) Search pets by name");
+            System.out.println("6) Search pets by age");
             System.out.println("7) Exit");
             System.out.print("Your choice: ");
             choice = s.nextInt();
@@ -76,6 +78,54 @@ public class PetDatabase {
             petList.add(myPet);
         }
         
+    }
+
+    public static void searchByName() {
+        System.out.print("What name would you like to search for?: ");
+        String name = s.next();
+
+        ArrayList<Pet> foundPets = new ArrayList<>();
+
+        for(int i = 0; i < Pet.petCount; i++) {
+            if(petList.get(i).getName().equals(name)) {
+                foundPets.add(petList.get(i));
+            }
+        }
+
+        System.out.println("+----------------------+");
+        System.out.println("| ID | NAME      | AGE |");
+        System.out.println("+----------------------+");
+
+        for(int i = 0; i < foundPets.size(); i++) {
+            System.out.printf("|%3d | %-10s|%4d |", i, foundPets.get(i).getName(), foundPets.get(i).getAge()); 
+            System.out.println();
+        }
+        System.out.println("+----------------------+");
+        System.out.println(foundPets.size() + " rows in set.");
+    }
+
+    public static void searchByAge() {
+        System.out.print("What age would you like to search for?: ");
+        int age = s.nextInt();
+
+        ArrayList<Pet> foundPets = new ArrayList<>();
+
+        for(int i = 0; i < Pet.petCount; i++) {
+            if(petList.get(i).getAge() == age) {
+                foundPets.add(petList.get(i));
+            }
+        }
+
+        System.out.println("+----------------------+");
+        System.out.println("| ID | NAME      | AGE |");
+        System.out.println("+----------------------+");
+
+        for(int i = 0; i < foundPets.size(); i++) {
+            System.out.printf("|%3d | %-10s|%4d |", i, foundPets.get(i).getName(), foundPets.get(i).getAge()); 
+            System.out.println();
+        }
+        System.out.println("+----------------------+");
+        System.out.println(foundPets.size() + " rows in set.");
     }
 }
 
