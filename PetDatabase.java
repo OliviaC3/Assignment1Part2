@@ -14,8 +14,8 @@ public class PetDatabase {
         System.out.println("What would you like to do?");
         System.out.println("1) View all pets");
         System.out.println("2) Add more pets");
-        //System.out.println("3) Update an existing pet");
-        //System.out.println("4) Remove an existing pet");
+        System.out.println("3) Update an existing pet");
+        System.out.println("4) Remove an existing pet");
         System.out.println("5) Search pets by name");
         System.out.println("6) Search pets by age");
         System.out.println("7) Exit");
@@ -26,6 +26,8 @@ public class PetDatabase {
             switch(choice) {
                 case 1: displayPets(); break;
                 case 2: addPet(); break;
+                case 3: updatePet(); break;
+                case 4: removePet(); break;
                 case 5: searchByName(); break;
                 case 6: searchByAge(); break;
                 case 7: break;
@@ -35,8 +37,8 @@ public class PetDatabase {
             System.out.println("What would you like to do?");
             System.out.println("1) View all pets");
             System.out.println("2) Add more pets");
-            //System.out.println("3) Update an existing pet");
-            //System.out.println("4) Remove an existing pet");
+            System.out.println("3) Update an existing pet");
+            System.out.println("4) Remove an existing pet");
             System.out.println("5) Search pets by name");
             System.out.println("6) Search pets by age");
             System.out.println("7) Exit");
@@ -126,6 +128,36 @@ public class PetDatabase {
         }
         System.out.println("+----------------------+");
         System.out.println(foundPets.size() + " rows in set.");
+    }
+
+    public static void updatePet() {
+        displayPets();
+
+        System.out.print("Enter the ID of the pet you would like to update: ");
+        int id = s.nextInt();
+
+        String oldName = petList.get(id).getName();
+
+        System.out.print("Enter the new name and age(name age): ");
+        String hold = s.nextLine();
+        String input = s.nextLine();
+        String[] inputSplit = input.split(" ");
+        petList.get(id).setName(inputSplit[0]);
+        petList.get(id).setAge(Integer.parseInt(inputSplit[1]));
+
+        System.out.println(oldName + " changed to " + input);
+    }
+
+    public static void removePet() {
+        displayPets();
+        System.out.print("Enter the ID of the pet you would like to remove: ");
+        int id = s.nextInt();
+
+        String name = petList.get(id).getName();
+        petList.remove(id);
+
+        Pet.petCount--;
+        System.out.println(name + " has been removed.");
     }
 }
 
