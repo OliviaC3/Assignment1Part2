@@ -2,23 +2,25 @@ package Assignment1Part2;
 // Author: Olivia Cole
 // Date: 11/4/2023
 // Assignment: Assignment 1 Part 2
-// Milestone 1
+// Milestone 3
 
 import java.util.*;
+import java.lang.*;
 
 public class PetDatabase {
     public static Scanner s = new Scanner(System.in);
     public static ArrayList<Pet> petList = new ArrayList<>();
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        load();
         System.out.println("Welcome to the pet database!");
         System.out.println("What would you like to do?");
         System.out.println("1) View all pets");
         System.out.println("2) Add more pets");
-        System.out.println("3) Update an existing pet");
-        System.out.println("4) Remove an existing pet");
-        System.out.println("5) Search pets by name");
-        System.out.println("6) Search pets by age");
-        System.out.println("7) Exit");
+        //System.out.println("3) Update an existing pet");
+        System.out.println("3) Remove an existing pet");
+        //System.out.println("5) Search pets by name");
+        //System.out.println("6) Search pets by age");
+        System.out.println("4) Exit");
         System.out.print("Your choice: ");
         int choice = s.nextInt();
 
@@ -26,22 +28,22 @@ public class PetDatabase {
             switch(choice) {
                 case 1: displayPets(); break;
                 case 2: addPet(); break;
-                case 3: updatePet(); break;
-                case 4: removePet(); break;
-                case 5: searchByName(); break;
-                case 6: searchByAge(); break;
-                case 7: break;
+                //case 3: updatePet(); break;
+                case 3: removePet(); break;
+                //case 5: searchByName(); break;
+                //case 6: searchByAge(); break;
+                case 4: break;
                 default: System.out.println("Invalid choice.");
             }
 
             System.out.println("What would you like to do?");
             System.out.println("1) View all pets");
             System.out.println("2) Add more pets");
-            System.out.println("3) Update an existing pet");
-            System.out.println("4) Remove an existing pet");
-            System.out.println("5) Search pets by name");
-            System.out.println("6) Search pets by age");
-            System.out.println("7) Exit");
+            //System.out.println("3) Update an existing pet");
+            System.out.println("3) Remove an existing pet");
+            //System.out.println("5) Search pets by name");
+            //System.out.println("6) Search pets by age");
+            System.out.println("4) Exit");
             System.out.print("Your choice: ");
             choice = s.nextInt();
         }
@@ -62,8 +64,9 @@ public class PetDatabase {
         System.out.println(Pet.petCount + " rows in set.");
     }
 
-    public static void addPet() {
+    public static void addPet() throws Exception {
         String input = s.nextLine();
+        int age;
         while(!input.equals("done")) {
             System.out.print("Add pet(name age): ");
             input = s.nextLine();
@@ -74,12 +77,38 @@ public class PetDatabase {
 
             String[] inputSplit = input.split(" ");
             String name = inputSplit[0];
-            int age = Integer.parseInt(inputSplit[1]);
+            try {
+                age = Integer.parseInt(inputSplit[1]);
+            } catch (IndexOutOfBoundsException ex) {
+                System.out.println("Input must have both a name and an age.");
+                break;
+            }
 
-            Pet myPet = new Pet(name, age);
-            petList.add(myPet);
+            if((age < 1) || (age > 20)) {
+                System.out.println("Pet age needs to be between 1-20.");
+            } else {
+                Pet myPet = new Pet(name, age);
+                petList.add(myPet);
+            }
         }
         
+    }
+
+    public static void load() {
+        String line;
+        String[] vals;
+        try {
+            Scanner input = new Scanner(File("Pets.txt"));
+
+            while(input.hasNextLine()) {
+                line = input.nextLine();
+                vals = input.split(" ");
+                Pet myPet = new Pet(vals[0], Integer.parseInt(vals[1]));
+                petList.add(myPet);
+            }
+        } catch (Exception ex) {
+
+        }
     }
 
     public static void searchByName() {
