@@ -5,7 +5,9 @@ package Assignment1Part2;
 // Milestone 3
 
 import java.util.*;
+import java.io.FileWriter;
 import java.lang.*;
+import java.io.*;
 
 public class PetDatabase {
     public static Scanner s = new Scanner(System.in);
@@ -24,7 +26,7 @@ public class PetDatabase {
         System.out.print("Your choice: ");
         int choice = s.nextInt();
 
-        while(choice != 7) {
+        while(choice != 4) {
             switch(choice) {
                 case 1: displayPets(); break;
                 case 2: addPet(); break;
@@ -48,6 +50,7 @@ public class PetDatabase {
             choice = s.nextInt();
         }
         
+        save();
         System.out.println("Goodbye!");
     }
 
@@ -94,20 +97,37 @@ public class PetDatabase {
         
     }
 
-    public static void load() {
+    public static void load() throws Exception {
         String line;
         String[] vals;
         try {
-            Scanner input = new Scanner(File("Pets.txt"));
+            Scanner input = new Scanner(new File("Pets.txt"));
 
             while(input.hasNextLine()) {
                 line = input.nextLine();
-                vals = input.split(" ");
+                vals = line.split(" ");
                 Pet myPet = new Pet(vals[0], Integer.parseInt(vals[1]));
                 petList.add(myPet);
             }
-        } catch (Exception ex) {
 
+            input.close();
+        } catch (Exception ex) {
+            System.out.println("No existing pet database.");
+        }
+    }
+
+    public static void save() {
+        try {
+            FileWriter file = new FileWriter("Pets.txt");
+            PrintWriter output = new PrintWriter(file);
+
+            for(int i = 0; i < petList.size(); i++) {
+                output.print(petList.get(i).getName() + " " + petList.get(i).getAge() + "\n");
+            }
+
+            output.close();
+        } catch (Exception ex) {
+            System.out.println("Save failed.");
         }
     }
 
