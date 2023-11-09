@@ -211,11 +211,15 @@ public class PetDatabase {
         System.out.print("Enter the ID of the pet you would like to remove: ");
         int id = s.nextInt();
 
-        String name = petList.get(id).getName();
-        petList.remove(id);
+        if((id < 0) || (id >= petList.size())) {
+            String name = petList.get(id).getName();
+            petList.remove(id);
 
-        Pet.petCount--;
-        System.out.println(name + " has been removed.");
+            Pet.petCount--;
+            System.out.println(name + " has been removed.");
+        } else {
+            System.out.println("Invalid ID.");
+        }
     }
 }
 
