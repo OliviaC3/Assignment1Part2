@@ -79,6 +79,10 @@ public class PetDatabase {
             }
 
             String[] inputSplit = input.split(" ");
+            if(inputSplit.length > 2) {
+                System.out.println("Invalid input.");
+                break;
+            }
             String name = inputSplit[0];
             try {
                 age = Integer.parseInt(inputSplit[1]);
