@@ -94,8 +94,13 @@ public class PetDatabase {
             if((age < 1) || (age > 20)) {
                 System.out.println("Pet age needs to be between 1-20.");
             } else {
-                Pet myPet = new Pet(name, age);
-                petList.add(myPet);
+                if(petList.size() >= 5) {
+                    System.out.println("The database is full.");
+                    break;
+                } else {
+                    Pet myPet = new Pet(name, age);
+                    petList.add(myPet);
+                }
             }
         }
         
